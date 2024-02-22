@@ -4,6 +4,7 @@ import BackgroundImage from '../components/BackgroundImage';
 import Header from '../components/Header';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase.config";
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Signup() {
@@ -30,9 +31,9 @@ export default function Signup() {
     const toggleShowPassword = () => {
         setShowPassword(prevState => !prevState);
     };
-
+    const navigate = useNavigate();
     onAuthStateChanged(firebaseAuth,(currentUser)=>{
-        if(currentUser)
+        if(currentUser) navigate("/");
     })
 
     return (
