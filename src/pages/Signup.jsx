@@ -8,6 +8,10 @@ export default function Signup() {
         email: " ",
         password: " ",
     });
+
+    const handleSignIn=async()=>{
+        console.log(formValue);
+    }
     return (
         <Container showPassword >
             <BackgroundImage />
@@ -23,14 +27,14 @@ export default function Signup() {
                         <input type="email" placeholder="Email Address" name="email" value={formValue.email} onChange={(e) => setFormValue({ ...formValue, [e.target.name]: e.target.value, })} />
                         {
                             showPassword && (
-                                <input type="password" placeholder="Password" name="password" />
+                                <input type="password" placeholder="Password" name="password" value={formValue.password} onChange={(e) => setFormValue({ ...formValue, [e.target.name]: e.target.value, })}/>
                             )}
                         {
                             !showPassword && (<button onClick={() => setShowPassword(true)} >Get Started</button>
                             )}
 
                     </div>
-                    <button>Sign Up</button>
+                    <button onClick={handleSignIn}>Sign Up</button>
                 </div>
             </div>
         </Container>
@@ -42,7 +46,7 @@ position:relative;
     position:absolute;
     top:0;
     left:0;
-    background-color:rgb(0,0,0,0.5);
+    background-color:rgba(0,0,0,0.5);
     height:100vh;
     width:100vw;
     display:grid;
@@ -58,7 +62,7 @@ position:relative;
         }
     }
     .form{
-        display:grid;
+        display:flex;
      grid-template-column:${({ showPassword }) => showPassword ? "1fr 1fr" : "2fr 1fr"};
         // width:60%;
         input{
