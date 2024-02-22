@@ -4,6 +4,10 @@ import BackgroundImage from '../components/BackgroundImage';
 import Header from '../components/Header';
 export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
+    const [formValue, setFormValue] = useState({
+        email: " ",
+        password: " ",
+    });
     return (
         <Container showPassword >
             <BackgroundImage />
@@ -16,7 +20,7 @@ export default function Signup() {
                         <h6>Ready to watch? Enter your email to create or restart membership</h6>
                     </div>
                     <div className="form">
-                        <input type="email" placeholder="Email Address" name="email" />
+                        <input type="email" placeholder="Email Address" name="email" value={formValue.email} onChange={(e) => setFormValue({ ...formValue, [e.target.name]: e.target.value, })} />
                         {
                             showPassword && (
                                 <input type="password" placeholder="Password" name="password" />
@@ -56,7 +60,7 @@ position:relative;
     .form{
         display:grid;
      grid-template-column:${({ showPassword }) => showPassword ? "1fr 1fr" : "2fr 1fr"};
-        width:60%;
+        // width:60%;
         input{
             color:black;
             border:none;
