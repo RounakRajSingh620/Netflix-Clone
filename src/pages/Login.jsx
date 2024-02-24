@@ -1,5 +1,5 @@
-import React from 'react';
-import { useState } from "react";
+import React ,{ useState }from 'react';
+
 import styled from "styled-components";
 import BackgroundImage from '../components/BackgroundImage';
 // import Header from '../components/Header';
