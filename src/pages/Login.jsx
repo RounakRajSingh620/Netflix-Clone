@@ -41,6 +41,9 @@ export default function Login() {
     // Pass the showpassword prop to the Container styled component
     <Container >
       <BackgroundImage />
+      <div className="content">
+      <Header/>
+      </div>
     </Container>
   );
 }
