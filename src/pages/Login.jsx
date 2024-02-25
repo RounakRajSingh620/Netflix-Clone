@@ -2,8 +2,8 @@ import React ,{ useState }from 'react';
 
 import styled from "styled-components";
 import BackgroundImage from '../components/BackgroundImage';
-// import Header from '../components/Header';
-import { signInWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import Header from '../components/Header';
+import { signInWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase.config";
 import { useNavigate } from 'react-router-dom';
 
@@ -43,6 +43,9 @@ export default function Login() {
       <BackgroundImage />
       <div className="content">
       <Header/>
+      <div className="form-container flex-column a-center j-center">
+
+      </div>
       </div>
     </Container>
   );
