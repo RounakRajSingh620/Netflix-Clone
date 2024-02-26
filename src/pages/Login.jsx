@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import BackgroundImage from "../components/BackgroundImage";
 import Header from "../components/Header";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { firebaseAuth } from "../utils/firebase-config";
+import { firebaseAuth } from "../utils/firebase.config";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -33,7 +33,6 @@ function Login() {
         <div className="form-container flex column a-center j-center">
           <div className="form flex column a-center j-center">
             <div className="title">
-              <h3>Login</h3>
             </div>
             <div className="container flex column">
               <input
