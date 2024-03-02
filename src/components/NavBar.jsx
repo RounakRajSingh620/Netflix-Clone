@@ -116,10 +116,33 @@ nav{
             background-color:transparent;
             svg{
                 color:white;
-
             }
+            input{
+                width:0;
+                opacity:0;
+                visibility:hidden;
+                transition:0.3s ease-in-out;
+                background-color:transparent;
+                border:none;
+                color:white;
+                &:focus{
+                    outline:none;
+                }
+            } 
+        }
+        .show-search{
+            border:1px solid white;
+            background-color:rgba(0,0,0,0.6);
+            input{
+                width:100%;
+                opacity:1;
+                visibility:visible;
+                padding:0.3rem;
             }
         }
+    }
+
+
     }
 }
 `;
