@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import styled from "styled-components";
 import Navbar from "../components/NavBar";
 import backgroundImage from "../assets/home.jpg";
@@ -7,8 +7,8 @@ import MovieLogo from "../assets/homeTitle.webp";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase.config.js";
 import { useNavigate } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
-// import { fetchMovies, getGenres } from "../store";
+import {  useDispatch } from "react-redux";
+import {  getGenres } from "../store";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 // import Slider from "../components/Slider";
@@ -18,12 +18,12 @@ function Netflix() {
   // const genres = useSelector((state) => state.netflix.genres);
   // const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   dispatch(getGenres());
-  // }, []);
+  useEffect(() => {
+    dispatch(getGenres());
+  }, []);
 
   // useEffect(() => {
   //   if (genresLoaded) {
