@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/NavBar";
 import backgroundImage from "../assets/home.jpg";
@@ -7,29 +7,29 @@ import MovieLogo from "../assets/homeTitle.webp";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase.config.js";
 import { useNavigate } from "react-router-dom";
-import {  useDispatch } from "react-redux";
-import {  getGenres } from "../store";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchMovies, getGenres } from "../store";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-// import Slider from "../components/Slider";
+import Slider from "../components/Slider.jsx";
 function Netflix() {
   const [isScrolled, setIsScrolled] = useState(false);
-  // const movies = useSelector((state) => state.netflix.movies);
-  // const genres = useSelector((state) => state.netflix.genres);
-  // const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
+  const movies = useSelector((state) => state.netflix.movies);
+  const genres = useSelector((state) => state.netflix.genres);
+  const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getGenres());
   }, []);
 
-  // useEffect(() => {
-  //   if (genresLoaded) {
-  //     dispatch(fetchMovies({ genres, type: "all" }));
-  //   }
-  // }, [genresLoaded]);
+  useEffect(() => {
+    if (genresLoaded) {
+      dispatch(fetchMovies({ genres, type: "all" }));
+    }
+  }, [genresLoaded]);
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (!currentUser) navigate("/login");
@@ -68,10 +68,10 @@ function Netflix() {
           </div>
         </div>
       </div>
-      </Container>
-      );
-    }
-    // <Slider movies={movies} />
+      <Slider movies={movies} />
+    </Container>
+  );
+}
 
 const Container = styled.div`
   background-color: black;
