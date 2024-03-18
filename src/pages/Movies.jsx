@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Navbar from "../components/NavBar";
 // import CardSlider from "../components/CardSlider";
 import { onAuthStateChanged } from "firebase/auth";
-import { firebaseAuth } from "../utils/firebase-config";
+import { firebaseAuth } from "../utils/firebase.config.js";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMovies, getGenres } from "../store";
