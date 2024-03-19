@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+// Import React and necessary hooks
+import React, { useState } from "react";
+// Import necessary components, icons, and libraries
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IoPlayCircleSharp } from "react-icons/io5";
@@ -7,55 +9,59 @@ import { RiThumbUpFill, RiThumbDownFill } from "react-icons/ri";
 import { BiChevronDown } from "react-icons/bi";
 import { BsCheck } from "react-icons/bs";
 import axios from "axios";
-import { onAuthStateChanged } from "firebase/auth"; // Importing onAuthStateChanged function from firebase auth
+import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase.config.js";
 import { useDispatch } from "react-redux";
 import { removeMovieFromLiked } from "../store";
 import video from "../assets/video.mp4";
 
+// Define and export the Card component
 export default React.memo(function Card({ index, movieData, isLiked = false }) {
-    const navigate = useNavigate(); // Hook for navigation
-    const dispatch = useDispatch(); // Hook for accessing redux dispatch
-    const [isHovered, setIsHovered] = useState(false); // State for hover status
-    const [email, setEmail] = useState(undefined); // State for user email
+    // Initialize navigate hook
+    const navigate = useNavigate();
+    // Initialize dispatch hook
+    const dispatch = useDispatch();
+    // Initialize state for hover state and email
+    const [isHovered, setIsHovered] = useState(false);
+    const [email, setEmail] = useState(undefined);
 
-    // Effect to fetch user email when component mounts
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(firebaseAuth, (currentUser) => {
-            if (currentUser) {
-                setEmail(currentUser.email);
-            } else {
-                navigate("/login"); // Redirect to login page if user is not logged in
-            }
-        });
-        return () => unsubscribe(); // Clean up on unmount
-    }, [navigate]); // Dependency array to ensure effect runs only once
+    // Listen for authentication state changes to get current user's email
+    onAuthStateChanged(firebaseAuth, (currentUser) => {
+        if (currentUser) {
+            setEmail(currentUser.email);
+        } else navigate("/login"); // Redirect to login if user not authenticated
+    });
 
     // Function to add movie to user's list
     const addToList = async () => {
         try {
+            // Send request to backend to add movie to user's list
             await axios.post("http://localhost:5000/api/user/add", {
                 email,
                 data: movieData,
             });
         } catch (error) {
-            console.log(error);
+            console.log(error); // Log any errors
         }
     };
 
+    // JSX for rendering the Card component
     return (
         <Container
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={() => setIsHovered(true)} // Set hover state on mouse enter
+            onMouseLeave={() => setIsHovered(false)} // Clear hover state on mouse leave
         >
+            {/* Render movie image */}
             <img
                 src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
                 alt="card"
-                onClick={() => navigate("/player")} // Navigate to player page on click
+                onClick={() => navigate("/player")} // Redirect to player on image click
             />
 
-            {isHovered && ( // Render hover content if isHovered is true
+            {/* Show additional info on hover */}
+            {isHovered && (
                 <div className="hover">
+                    {/* Container for image and video */}
                     <div className="image-video-container">
                         <img
                             src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
@@ -70,19 +76,28 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
                             onClick={() => navigate("/player")}
                         />
                     </div>
+                    {/* Container for movie information */}
                     <div className="info-container flex column">
+                        {/* Movie title */}
                         <h3 className="name" onClick={() => navigate("/player")}>
                             {movieData.name}
                         </h3>
+                        {/* Icons for actions */}
                         <div className="icons flex j-between">
+                            {/* Controls */}
                             <div className="controls flex">
+                                {/* Play button */}
                                 <IoPlayCircleSharp
                                     title="Play"
                                     onClick={() => navigate("/player")}
                                 />
+                                {/* Like button */}
                                 <RiThumbUpFill title="Like" />
+                                {/* Dislike button */}
                                 <RiThumbDownFill title="Dislike" />
+                                {/* Conditional rendering of add/remove button based on like status */}
                                 {isLiked ? (
+                                    // Remove from list button
                                     <BsCheck
                                         title="Remove from List"
                                         onClick={() =>
@@ -92,16 +107,20 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
                                         }
                                     />
                                 ) : (
+                                    // Add to list button
                                     <AiOutlinePlus title="Add to my list" onClick={addToList} />
                                 )}
                             </div>
+                            {/* More info button */}
                             <div className="info">
                                 <BiChevronDown title="More Info" />
                             </div>
                         </div>
+                        {/* List of genres */}
                         <div className="genres flex">
                             <ul className="flex">
-                                {movieData.genres.map((genre, index) => ( // Added key prop to each list item
+                                {/* Map through genres and render each one with a key */}
+                                {movieData.genres.map((genre, index) => (
                                     <li key={index}>{genre}</li>
                                 ))}
                             </ul>
@@ -113,7 +132,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
     );
 });
 
-// Styled component for card container
+
 const Container = styled.div`
   max-width: 230px;
   width: 230px;
