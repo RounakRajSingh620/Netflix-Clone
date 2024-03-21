@@ -57,7 +57,7 @@ export const fetchDataByGenre = createAsyncThunk(
         } = thunkAPI.getState();
         return getRawData(
             `https://api.themoviedb.org/3/discover/${type}?api_key=${API_KEY}&with_genres=${genre}`,
-            // `${TMDB_BASE_URL}/discover/${type}/?api_key=${API_KEY}&with_genres=${genre}`,
+            `${TMDB_BASE_URL}/discover/${type}/?api_key=${API_KEY}&with_genres=${genre}`,
             genres
         );
     }
